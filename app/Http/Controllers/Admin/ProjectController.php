@@ -61,8 +61,10 @@ class ProjectController extends Controller
 
         $newProject = Project::create($data);
 
-        foreach ($data['technologies'] as $technologyId) {
-            $newProject->technologies()->attach($technologyId);
+        if (array_key_exists('technologies', $data)) {
+            foreach ($data['technologies'] as $technologyId) {
+                $newProject->technologies()->attach($technologyId);
+            }
         }
 
         return redirect()->route('admin.projects.index')->with('success', 'Progetto creato con successo');
@@ -121,6 +123,13 @@ class ProjectController extends Controller
         }
 
         $project->update($data);
+
+        if (array_key_exists('technologies', $data)) {
+            $project->technologies()->sync($data['technologies']);
+        }
+        else {
+            $project->technologies()->detach();
+        }
         
         return redirect()->route('admin.projects.index')->with('success', 'Progetto modificato con successo');
     }
