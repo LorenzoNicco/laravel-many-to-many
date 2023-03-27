@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Type;
+use App\Models\Technology;
 
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
@@ -37,8 +38,9 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
+        $technologies = Technology::all();
 
-        return view('admin.projects.create', compact('types'));
+        return view('admin.projects.create', compact('types', 'technologies'));
     }
 
     /**
@@ -58,6 +60,10 @@ class ProjectController extends Controller
         }
 
         $newProject = Project::create($data);
+
+        foreach ($data['technologies'] as $technologyId) {
+            $newProject->technologies()->attach($technologyId);
+        }
 
         return redirect()->route('admin.projects.index')->with('success', 'Progetto creato con successo');
     }
@@ -82,7 +88,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
-        return view('admin.projects.edit', compact('project', 'types'));
+        $technologies = Technology::all();
+        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
     }
 
     /**

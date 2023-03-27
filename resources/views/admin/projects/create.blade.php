@@ -29,7 +29,17 @@
         </div>
 
         <div class="mb-3">
-            <label for="image-input" class="form-label">Immagine</label>
+            <label class="text-light form-label">Scegli una tecnologia da utilizzare:</label>
+            @foreach ($technologies as $technology)
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="technologies[]" id="tech-{{ $technology->id }}" value="{{ $technology->id }}">
+                    <label class="form-check-label text-light" for="tech-{{ $technology->id }}">{{ $technology->name }}</label>
+                </div>
+            @endforeach
+        </div>
+
+        <div class="mb-3">
+            <label for="image-input" class="form-label text-light">Immagine</label>
             <input class="form-control" type="file" id="image-input" name="img" accept="image/*">
         </div>
 
