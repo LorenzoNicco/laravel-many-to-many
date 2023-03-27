@@ -19,6 +19,18 @@
                     @endif
                 </h3>
 
+                <h3 class="mb-3">Tecnologie utilizzate: 
+                    @if ($project->technology)
+                        <ul>
+                            <li>
+                                <a href="{{ route('admin.technologies.show', $project->technology->id) }}">{{ $project->technology->name }}</a>
+                            </li>
+                        </ul>
+                    @else
+                        Non specificato.
+                    @endif
+                </h3>
+
                 @if ($project->img)
                     <img src="{{ asset('storage/'.$project->img) }}" class="card-img-top mb-3" alt="immagine" style="height: 200px; width: 300px">
                 @endif
