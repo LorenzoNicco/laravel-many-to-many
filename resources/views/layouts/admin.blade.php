@@ -54,6 +54,16 @@
                             <i class="fa-solid fa-plus"></i> New Type
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white {{ Route::currentRouteName() == 'admin.technologies.index' ? 'bg-secondary' : '' }}" href="{{route('admin.technologies.index')}}">
+                            <i class="fa-solid fa-list-ul"></i> Technologies
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white {{ Route::currentRouteName() == 'admin.technologies.create' ? 'bg-secondary' : '' }}" href="{{route('admin.technologies.create')}}">
+                            <i class="fa-solid fa-plus"></i> New Technology
+                        </a>
+                    </li>
                 </ul>
                 <div class="navbar-nav">
                     <div class="nav-item text-nowrap ms-2">

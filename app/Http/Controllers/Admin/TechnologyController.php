@@ -7,6 +7,11 @@ use App\Models\Technology;
 use App\Http\Requests\StoreTechnologyRequest;
 use App\Http\Requests\UpdateTechnologyRequest;
 
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
+use Illuminate\Http\Request;
+
 class TechnologyController extends Controller
 {
     /**
@@ -16,7 +21,11 @@ class TechnologyController extends Controller
      */
     public function index()
     {
-        //
+        $technologies = Technology::all();
+
+        return view('admin.technologies.index', [
+            'technologies' => $technologies
+        ]);
     }
 
     /**
@@ -26,7 +35,7 @@ class TechnologyController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.technologies.create');
     }
 
     /**
@@ -37,7 +46,12 @@ class TechnologyController extends Controller
      */
     public function store(StoreTechnologyRequest $request)
     {
-        //
+        $data = $request->validated();
+        $data['slug'] = Str::slug($data['name']);
+
+        $newTechnology = Technology::create($data);
+
+        return redirect()->route('admin.technologies.index')->with('success', 'Tecnologia creata con successo');
     }
 
     /**
@@ -48,7 +62,7 @@ class TechnologyController extends Controller
      */
     public function show(Technology $technology)
     {
-        //
+        return view('admin.technologies.show', compact('technology'));
     }
 
     /**
@@ -59,7 +73,7 @@ class TechnologyController extends Controller
      */
     public function edit(Technology $technology)
     {
-        //
+        return view('admin.technologies.edit', compact('technology'));
     }
 
     /**
@@ -71,7 +85,12 @@ class TechnologyController extends Controller
      */
     public function update(UpdateTechnologyRequest $request, Technology $technology)
     {
-        //
+        $data = $request->validated();
+        $data['slug'] = Str::slug($data['name']);
+
+        $technology->update($data);
+
+        return redirect()->route('admin.technologies.index')->with('success', 'Tecnologia modificata con successo');
     }
 
     /**
@@ -82,6 +101,8 @@ class TechnologyController extends Controller
      */
     public function destroy(Technology $technology)
     {
-        //
+        $technology->delete();
+
+        return redirect()->route('admin.technologies.index')->with('success', 'Tecnologia eliminata con successo');
     }
 }

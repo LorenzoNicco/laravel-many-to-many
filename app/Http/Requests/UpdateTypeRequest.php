@@ -29,7 +29,7 @@ class UpdateTypeRequest extends FormRequest
         return [
             'title' => [
                 'required',
-                Rule::unique('projects')->ignore($this->type->id)
+                Rule::unique('types')->ignore($this->type->id)
             ],
         ];
     }
